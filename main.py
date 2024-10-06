@@ -9,7 +9,13 @@ def main():
     dt = 0
     running = True
 
+    drawables = pygame.sprite.Group()
+    updatables = pygame.sprite.Group()
+
+    Player.containers = (drawables, updatables)
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+
+
 
     print("Starting asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
@@ -24,11 +30,15 @@ def main():
             running = False
 
         screen.fill("black")
-        player.draw(screen)
+        for thing in drawables:
+            thing.draw(screen)
 
         pygame.display.flip()
 
         dt = clock.tick(60) / 1000
+
+        for thing in updatables:
+            thing.update(dt)
 
 if __name__ == "__main__":
     main()
